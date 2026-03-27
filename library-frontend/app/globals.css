@@ -1,0 +1,179 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Default: Deep Night */
+  --ink-950: #0A0A0F;
+  --ink-900: #111118;
+  --ink-800: #1A1A24;
+  --ink-700: #252533;
+  --ink-600: #363648;
+  --text-primary: #E8E8F0;
+  --text-muted: #A8A8C0;
+  --text-dim: #6B6B85;
+  
+  /* Dynamic Accents (Can be overridden by JS) */
+  --gold-400: #F5C842;
+  --gold-500: #E8B800;
+  
+  --sage-500: #5A9E59;
+  --rose-500: #EF4444;
+}
+
+[data-theme='light'] {
+  --ink-950: #F9FAFB;
+  --ink-900: #F3F4F6;
+  --ink-800: #E5E7EB;
+  --ink-700: #D1D5DB;
+  --ink-600: #9CA3AF;
+  --text-primary: #111827;
+  --text-muted: #4B5563;
+  --text-dim: #6B7280;
+}
+
+.bg-grid {
+  background-size: 30px 30px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+}
+
+.bg-grid-pattern {
+  mask-image: radial-gradient(circle at center, white, transparent 80%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--ink-950);
+  color: var(--text-primary);
+  font-family: 'DM Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--ink-900); }
+::-webkit-scrollbar-thumb { background: var(--ink-600); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--gold-500); }
+
+/* Sidebar active link glow */
+.nav-active {
+  background: linear-gradient(90deg, rgba(245,200,66,0.12) 0%, rgba(245,200,66,0.04) 100%);
+  border-left: 2px solid var(--gold-400);
+  color: var(--gold-400);
+}
+
+/* Card shimmer */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.card-glow:hover {
+  box-shadow: 0 0 0 1px rgba(245,200,66,0.15), 0 8px 32px rgba(0,0,0,0.4);
+  transition: box-shadow 0.3s ease;
+}
+
+/* Fade in animation */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.fade-up {
+  animation: fadeUp 0.4s ease forwards;
+}
+
+.fade-up-delay-1 { animation-delay: 0.05s; opacity: 0; }
+.fade-up-delay-2 { animation-delay: 0.10s; opacity: 0; }
+.fade-up-delay-3 { animation-delay: 0.15s; opacity: 0; }
+.fade-up-delay-4 { animation-delay: 0.20s; opacity: 0; }
+
+/* Table row hover */
+.table-row-hover:hover {
+  background: rgba(245,200,66,0.04);
+}
+
+/* Input focus ring */
+.input-field {
+  background: var(--ink-800);
+  border: 1px solid var(--ink-600);
+  color: var(--text-primary);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  transition: border-color 0.2s;
+  width: 100%;
+  outline: none;
+}
+
+.input-field:focus {
+  border-color: var(--gold-400);
+  box-shadow: 0 0 0 3px rgba(245,200,66,0.08);
+}
+
+.input-field::placeholder {
+  color: var(--text-dim);
+}
+
+/* Button styles */
+.btn-primary {
+  background: var(--gold-400);
+  color: var(--ink-950);
+  font-weight: 600;
+  font-family: 'DM Sans', sans-serif;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 14px;
+}
+
+.btn-primary:hover {
+  background: var(--gold-500);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(245,200,66,0.25);
+}
+
+.btn-secondary {
+  background: var(--ink-700);
+  color: var(--text-primary);
+  font-weight: 500;
+  font-family: 'DM Sans', sans-serif;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1px solid var(--ink-600);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 14px;
+}
+
+.btn-secondary:hover {
+  background: var(--ink-600);
+  border-color: var(--gold-400);
+}
+
+.btn-danger {
+  background: rgba(239,68,68,0.12);
+  color: #F87171;
+  font-weight: 500;
+  font-family: 'DM Sans', sans-serif;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1px solid rgba(239,68,68,0.2);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 13px;
+}
+
+.btn-danger:hover {
+  background: rgba(239,68,68,0.2);
+}
