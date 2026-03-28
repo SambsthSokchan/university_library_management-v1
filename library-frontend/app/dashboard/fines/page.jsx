@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from 'react';
 import { getFines, payFine } from '@/lib/api';
-import { AlertCircle, CheckCircle2, DollarSign, Search, Clock, History } from 'lucide-react';
+import { AlertCircle } from 'lucide-react';
 import toast from 'react-hot-toast';
 import { clsx } from 'clsx';
 
 export default function FinesPage() {
-  const [fines, setFines] = useState<any[]>([]);
+  const [fines, setFines] = useState([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
 
@@ -15,26 +15,26 @@ export default function FinesPage() {
     try {
       const { data } = await getFines();
       setFines(data);
-    } catch { toast.error('Failed to load fines'); }
-    finally { setLoading(false); }
+    } catch {toast.error('Failed to load fines');} finally
+    {setLoading(false);}
   };
 
-  useEffect(() => { fetchFines(); }, []);
+  useEffect(() => {fetchFines();}, []);
 
-  const handlePay = async (id: number) => {
+  const handlePay = async (id) => {
     try {
       await payFine(id);
       toast.success('Fine paid successfully');
       fetchFines();
-    } catch { toast.error('Payment failed'); }
+    } catch {toast.error('Payment failed');}
   };
 
-  const filteredFines = fines.filter(f => 
-    f.member?.fullName.toLowerCase().includes(search.toLowerCase()) ||
-    f.member?.studentId.toLowerCase().includes(search.toLowerCase())
+  const filteredFines = fines.filter((f) =>
+  f.member?.fullName.toLowerCase().includes(search.toLowerCase()) ||
+  f.member?.studentId.toLowerCase().includes(search.toLowerCase())
   );
 
-  const totalUnpaid = fines.filter(f => !f.paid).reduce((sum, f) => sum + f.amount, 0);
+  const totalUnpaid = fines.filter((f) => !f.paid).reduce((sum, f) => sum + f.amount, 0);
 
   return (
     <div className="p-8">
@@ -61,24 +61,24 @@ export default function FinesPage() {
           style={{ maxWidth: '400px' }}
           placeholder="🔍  Search by member name or ID..."
           value={search}
-          onChange={e => setSearch(e.target.value)}
-        />
+          onChange={(e) => setSearch(e.target.value)} />
+        
       </div>
 
       <div className="rounded-2xl overflow-hidden fade-up fade-up-delay-2"
-        style={{ background: 'var(--ink-800)', border: '1px solid var(--ink-600)' }}>
+      style={{ background: 'var(--ink-800)', border: '1px solid var(--ink-600)' }}>
         <table className="w-full">
           <thead>
             <tr style={{ borderBottom: '1px solid var(--ink-700)' }}>
-              {['Member', 'Amount', 'Reason', 'Date', 'Status', 'Action'].map(h => (
-                <th key={h} className="text-left px-6 py-3 text-xs font-semibold uppercase tracking-wider"
-                  style={{ color: 'var(--text-dim)' }}>{h}</th>
-              ))}
+              {['Member', 'Amount', 'Reason', 'Date', 'Status', 'Action'].map((h) =>
+              <th key={h} className="text-left px-6 py-3 text-xs font-semibold uppercase tracking-wider"
+              style={{ color: 'var(--text-dim)' }}>{h}</th>
+              )}
             </tr>
           </thead>
           <tbody>
-            {filteredFines.map((fine) => (
-              <tr key={fine.id} className="table-row-hover" style={{ borderBottom: '1px solid var(--ink-700)' }}>
+            {filteredFines.map((fine) =>
+            <tr key={fine.id} className="table-row-hover" style={{ borderBottom: '1px solid var(--ink-700)' }}>
                 <td className="px-6 py-4">
                    <p className="text-sm font-bold text-white leading-tight">{fine.member?.fullName}</p>
                    <p className="text-[10px] uppercase font-bold tracking-widest mt-1" style={{ color: 'var(--gold-400)' }}>{fine.member?.studentId}</p>
@@ -94,35 +94,35 @@ export default function FinesPage() {
                 </td>
                 <td className="px-6 py-4">
                   <span className={clsx(
-                    "text-[10px] font-bold px-2 py-1 rounded-lg uppercase tracking-wider",
-                    fine.paid ? "bg-emerald-500/10 text-emerald-500" : "bg-amber-500/10 text-amber-500"
-                  )}>
+                  "text-[10px] font-bold px-2 py-1 rounded-lg uppercase tracking-wider",
+                  fine.paid ? "bg-emerald-500/10 text-emerald-500" : "bg-amber-500/10 text-amber-500"
+                )}>
                     {fine.paid ? 'Paid' : 'Unpaid'}
                   </span>
                 </td>
                 <td className="px-6 py-4">
-                  {!fine.paid && (
-                    <button 
-                      onClick={() => handlePay(fine.id)}
-                      className="btn-primary py-1 px-4 text-[10px]"
-                    >
+                  {!fine.paid &&
+                <button
+                  onClick={() => handlePay(fine.id)}
+                  className="btn-primary py-1 px-4 text-[10px]">
+                  
                       Collect Pay
                     </button>
-                  )}
+                }
                 </td>
               </tr>
-            ))}
-            {filteredFines.length === 0 && !loading && (
-              <tr>
+            )}
+            {filteredFines.length === 0 && !loading &&
+            <tr>
                 <td colSpan={6} className="py-20 text-center">
                   <AlertCircle size={32} className="mx-auto text-zinc-800 mb-3 opacity-20" />
                   <p style={{ color: 'var(--text-dim)' }}>No pending fines found</p>
                 </td>
               </tr>
-            )}
+            }
           </tbody>
         </table>
       </div>
-    </div>
-  );
+    </div>);
+
 }

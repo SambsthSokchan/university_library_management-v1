@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from 'react';
 import { getExpenses, createExpense } from '@/lib/api';
-import { TrendingDown, DollarSign, Plus, Calendar, ArrowDownRight, Tag, CreditCard } from 'lucide-react';
+import { TrendingDown, Plus, ArrowDownRight } from 'lucide-react';
 import toast from 'react-hot-toast';
 import Modal from '@/components/Modal';
-import { clsx } from 'clsx';
+
 
 export default function ExpensePage() {
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({ amount: '', category: 'MAINTENANCE', description: '' });
@@ -17,13 +17,13 @@ export default function ExpensePage() {
     try {
       const { data } = await getExpenses();
       setData(data);
-    } catch { toast.error('Failed to load expense records'); }
-    finally { setLoading(false); }
+    } catch {toast.error('Failed to load expense records');} finally
+    {setLoading(false);}
   };
 
-  useEffect(() => { fetchExpenses(); }, []);
+  useEffect(() => {fetchExpenses();}, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await createExpense({
@@ -34,7 +34,7 @@ export default function ExpensePage() {
       toast.success('Expense recorded');
       setIsModalOpen(false);
       fetchExpenses();
-    } catch { toast.error('Failed to record expense'); }
+    } catch {toast.error('Failed to record expense');}
   };
 
   const totalExpense = data.reduce((sum, item) => sum + item.amount, 0);
@@ -69,35 +69,35 @@ export default function ExpensePage() {
         <div className="card-glow rounded-2xl p-6" style={{ background: 'var(--ink-800)', border: '1px solid var(--ink-600)' }}>
            <p className="text-[10px] uppercase font-bold tracking-widest mb-2" style={{ color: 'var(--text-dim)' }}>Maintenance</p>
            <p className="text-3xl font-bold mb-1" style={{ color: 'var(--text-primary)', fontFamily: 'Playfair Display, serif' }}>
-             ${data.filter(i => i.category === 'MAINTENANCE').reduce((sum, i) => sum + i.amount, 0).toFixed(2)}
+             ${data.filter((i) => i.category === 'MAINTENANCE').reduce((sum, i) => sum + i.amount, 0).toFixed(2)}
            </p>
         </div>
 
         <div className="card-glow rounded-2xl p-6" style={{ background: 'var(--ink-800)', border: '1px solid var(--ink-600)' }}>
            <p className="text-[10px] uppercase font-bold tracking-widest mb-2" style={{ color: 'var(--text-dim)' }}>Procurement</p>
            <p className="text-3xl font-bold mb-1" style={{ color: 'var(--text-primary)', fontFamily: 'Playfair Display, serif' }}>
-             ${data.filter(i => i.category === 'PROCUREMENT').reduce((sum, i) => sum + i.amount, 0).toFixed(2)}
+             ${data.filter((i) => i.category === 'PROCUREMENT').reduce((sum, i) => sum + i.amount, 0).toFixed(2)}
            </p>
         </div>
       </div>
 
       <div className="rounded-2xl overflow-hidden fade-up fade-up-delay-2"
-        style={{ background: 'var(--ink-800)', border: '1px solid var(--ink-600)' }}>
+      style={{ background: 'var(--ink-800)', border: '1px solid var(--ink-600)' }}>
         <table className="w-full">
            <thead>
              <tr style={{ borderBottom: '1px solid var(--ink-700)' }}>
-                {['Category', 'Reason', 'Amount', 'Date'].map(h => (
-                  <th key={h} className="text-left px-6 py-4 text-xs font-semibold uppercase tracking-wider"
-                    style={{ color: 'var(--text-dim)' }}>{h}</th>
-                ))}
+                {['Category', 'Reason', 'Amount', 'Date'].map((h) =>
+              <th key={h} className="text-left px-6 py-4 text-xs font-semibold uppercase tracking-wider"
+              style={{ color: 'var(--text-dim)' }}>{h}</th>
+              )}
              </tr>
            </thead>
            <tbody>
-             {data.map((item) => (
-                <tr key={item.id} className="table-row-hover" style={{ borderBottom: '1px solid var(--ink-700)' }}>
+             {data.map((item) =>
+            <tr key={item.id} className="table-row-hover" style={{ borderBottom: '1px solid var(--ink-700)' }}>
                   <td className="px-6 py-4">
                      <span className="text-[10px] font-bold px-2.5 py-1 rounded-lg uppercase tracking-widest"
-                       style={{ background: 'rgba(239,68,68,0.1)', color: '#EF4444' }}>
+                style={{ background: 'rgba(239,68,68,0.1)', color: '#EF4444' }}>
                        {item.category}
                      </span>
                   </td>
@@ -112,13 +112,13 @@ export default function ExpensePage() {
                     {item.date?.split('T')[0]}
                   </td>
                 </tr>
-             ))}
-             {data.length === 0 && !loading && (
-               <tr><td colSpan={4} className="py-24 text-center">
+            )}
+             {data.length === 0 && !loading &&
+            <tr><td colSpan={4} className="py-24 text-center">
                  <TrendingDown size={48} className="mx-auto text-zinc-800 mb-3 opacity-20" />
                  <p style={{ color: 'var(--text-dim)' }}>No expense records found</p>
                </td></tr>
-             )}
+            }
            </tbody>
         </table>
       </div>
@@ -128,7 +128,7 @@ export default function ExpensePage() {
             <div>
               <label className="block text-xs font-medium mb-1.5" style={{ color: 'var(--text-muted)' }}>Cost Category</label>
               <select className="input-field" value={formData.category}
-                onChange={e => setFormData({ ...formData, category: e.target.value })}>
+            onChange={(e) => setFormData({ ...formData, category: e.target.value })}>
                 <option value="MAINTENANCE">Facility Maintenance</option>
                 <option value="PROCUREMENT">Book Procurement</option>
                 <option value="UTILITIES">Utility Bills</option>
@@ -138,12 +138,12 @@ export default function ExpensePage() {
             <div>
               <label className="block text-xs font-medium mb-1.5" style={{ color: 'var(--text-muted)' }}>Amount (USD)</label>
               <input className="input-field" type="number" step="0.01" value={formData.amount} required
-                onChange={e => setFormData({ ...formData, amount: e.target.value })} />
+            onChange={(e) => setFormData({ ...formData, amount: e.target.value })} />
             </div>
             <div>
               <label className="block text-xs font-medium mb-1.5" style={{ color: 'var(--text-muted)' }}>Description / Justification</label>
               <input className="input-field" placeholder="Brief note about the expense..." value={formData.description}
-                onChange={e => setFormData({ ...formData, description: e.target.value })} />
+            onChange={(e) => setFormData({ ...formData, description: e.target.value })} />
             </div>
             <div className="flex gap-3 pt-3">
               <button type="submit" className="btn-primary flex-1">Record Expense</button>
@@ -151,6 +151,6 @@ export default function ExpensePage() {
             </div>
          </form>
       </Modal>
-    </div>
-  );
+    </div>);
+
 }

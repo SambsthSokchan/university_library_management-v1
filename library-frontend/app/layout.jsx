@@ -1,13 +1,13 @@
-import type { Metadata } from 'next';
+
 import './globals.css';
 import { Toaster } from 'react-hot-toast';
 
-export const metadata: Metadata = {
+export const metadata = {
   title: 'LibraryOS — University Library Management',
-  description: 'University Library & Financial Management System',
+  description: 'University Library & Financial Management System'
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
@@ -34,14 +34,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               color: '#E8E8F0',
               border: '1px solid #363648',
               fontFamily: 'DM Sans, sans-serif',
-              fontSize: '14px',
+              fontSize: '14px'
             },
             success: { iconTheme: { primary: '#5A9E59', secondary: '#0A0A0F' } },
-            error: { iconTheme: { primary: '#EF4444', secondary: '#0A0A0F' } },
-          }}
-        />
+            error: { iconTheme: { primary: '#EF4444', secondary: '#0A0A0F' } }
+          }} />
+        
         {children}
       </body>
-    </html>
-  );
+    </html>);
+
 }

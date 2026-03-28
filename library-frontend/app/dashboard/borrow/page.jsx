@@ -2,21 +2,21 @@
 
 import { useEffect, useState } from 'react';
 import { getBorrows, getActiveBorrows, getOverdueBorrows, borrowBook, returnBook, getBooks, getMembers } from '@/lib/api';
-import { 
-  ArrowLeftRight, Search, Plus, 
-  Calendar, User, Book as BookIcon, 
-  CheckCircle2, AlertCircle, Clock
-} from 'lucide-react';
+import {
+  ArrowLeftRight, Plus,
+  Calendar, User, Book as BookIcon,
+  CheckCircle2, AlertCircle, Clock } from
+'lucide-react';
 import toast from 'react-hot-toast';
 import Modal from '@/components/Modal';
 import { clsx } from 'clsx';
 
 export default function BorrowPage() {
-  const [records, setRecords] = useState<any[]>([]);
-  const [books, setBooks] = useState<any[]>([]);
-  const [members, setMembers] = useState<any[]>([]);
+  const [records, setRecords] = useState([]);
+  const [books, setBooks] = useState([]);
+  const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [tab, setTab] = useState<'ALL' | 'ACTIVE' | 'OVERDUE'>('ALL');
+  const [tab, setTab] = useState('ALL');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({ bookId: '', memberId: '' });
 
@@ -24,14 +24,14 @@ export default function BorrowPage() {
     setLoading(true);
     try {
       const [recordsRes, booksRes, membersRes] = await Promise.all([
-        tab === 'ALL' ? getBorrows() : 
-        tab === 'ACTIVE' ? getActiveBorrows() : getOverdueBorrows(),
-        getBooks(),
-        getMembers()
-      ]);
+      tab === 'ALL' ? getBorrows() :
+      tab === 'ACTIVE' ? getActiveBorrows() : getOverdueBorrows(),
+      getBooks(),
+      getMembers()]
+      );
       setRecords(recordsRes.data);
-      setBooks(booksRes.data.filter((b: any) => b.availableQuantity > 0));
-      setMembers(membersRes.data.filter((m: any) => m.isActive));
+      setBooks(booksRes.data.filter((b) => b.availableQuantity > 0));
+      setMembers(membersRes.data.filter((m) => m.isActive));
     } catch (error) {
       toast.error('Failed to load borrowing data');
     } finally {
@@ -39,9 +39,9 @@ export default function BorrowPage() {
     }
   };
 
-  useEffect(() => { fetchData(); }, [tab]);
+  useEffect(() => {fetchData();}, [tab]);
 
-  const handleBorrow = async (e: React.FormEvent) => {
+  const handleBorrow = async (e) => {
     e.preventDefault();
     try {
       await borrowBook({
@@ -51,12 +51,12 @@ export default function BorrowPage() {
       toast.success('Book issued successfully');
       setIsModalOpen(false);
       fetchData();
-    } catch (error: any) {
+    } catch (error) {
       toast.error(error.response?.data || 'Failed to issue book');
     }
   };
 
-  const handleReturn = async (id: number) => {
+  const handleReturn = async (id) => {
     try {
       await returnBook(id);
       toast.success('Book returned successfully');
@@ -91,18 +91,18 @@ export default function BorrowPage() {
       </div>
 
       <div className="grid grid-cols-1 gap-4 fade-up fade-up-delay-2">
-        {records.map((record) => (
-          <div key={record.id} className="card-glow rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6"
-            style={{ background: 'var(--ink-800)', border: '1px solid var(--ink-600)' }}>
+        {records.map((record) =>
+        <div key={record.id} className="card-glow rounded-2xl p-6 flex flex-col md:flex-row items-center gap-6"
+        style={{ background: 'var(--ink-800)', border: '1px solid var(--ink-600)' }}>
             
             <div className={clsx(
-              "w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 border",
-              record.status === 'BORROWED' ? "bg-amber-500/10 text-amber-500 border-amber-500/30" :
-              record.status === 'RETURNED' ? "bg-emerald-500/10 text-emerald-500 border-emerald-500/30" :
-              "bg-rose-500/10 text-rose-500 border-rose-500/30"
-            )}>
+            "w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 border",
+            record.status === 'BORROWED' ? "bg-amber-500/10 text-amber-500 border-amber-500/30" :
+            record.status === 'RETURNED' ? "bg-emerald-500/10 text-emerald-500 border-emerald-500/30" :
+            "bg-rose-500/10 text-rose-500 border-rose-500/30"
+          )}>
               {record.status === 'BORROWED' ? <Clock size={24} /> :
-               record.status === 'RETURNED' ? <CheckCircle2 size={24} /> : <AlertCircle size={24} />}
+            record.status === 'RETURNED' ? <CheckCircle2 size={24} /> : <AlertCircle size={24} />}
             </div>
 
             <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -132,54 +132,54 @@ export default function BorrowPage() {
             </div>
 
             <div className="flex items-center px-6 border-l border-white/5 h-12 min-w-[140px] justify-center">
-               {record.status === 'BORROWED' ? (
-                 <button 
-                  onClick={() => handleReturn(record.id)}
-                  className="btn-primary py-1.5 px-6 text-xs whitespace-nowrap"
-                 >
+               {record.status === 'BORROWED' ?
+            <button
+              onClick={() => handleReturn(record.id)}
+              className="btn-primary py-1.5 px-6 text-xs whitespace-nowrap">
+              
                    Return Book
-                 </button>
-               ) : (
-                 <span className="text-[10px] uppercase font-bold tracking-widest text-zinc-500">
+                 </button> :
+
+            <span className="text-[10px] uppercase font-bold tracking-widest text-zinc-500">
                    {record.status}
                  </span>
-               )}
+            }
             </div>
           </div>
-        ))}
-        {records.length === 0 && !loading && (
-          <div className="py-24 text-center rounded-2xl" style={{ border: '1px dashed var(--ink-600)' }}>
+        )}
+        {records.length === 0 && !loading &&
+        <div className="py-24 text-center rounded-2xl" style={{ border: '1px dashed var(--ink-600)' }}>
             <ArrowLeftRight size={48} className="mx-auto text-zinc-800 mb-4 opacity-20" />
             <p style={{ color: 'var(--text-dim)' }}>No borrowing records found</p>
           </div>
-        )}
+        }
       </div>
 
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Issue Book">
         <form onSubmit={handleBorrow} className="flex flex-col gap-5">
           <div>
             <label className="block text-xs font-medium mb-1.5" style={{ color: 'var(--text-muted)' }}>Select Book *</label>
-            <select 
-              className="input-field cursor-pointer" 
+            <select
+              className="input-field cursor-pointer"
               value={formData.bookId}
-              onChange={(e) => setFormData({...formData, bookId: e.target.value})}
-              required
-            >
+              onChange={(e) => setFormData({ ...formData, bookId: e.target.value })}
+              required>
+              
               <option value="">Choose a book...</option>
-              {books.map(b => <option key={b.id} value={b.id}>{b.title} ({b.availableQuantity} left)</option>)}
+              {books.map((b) => <option key={b.id} value={b.id}>{b.title} ({b.availableQuantity} left)</option>)}
             </select>
           </div>
 
           <div>
             <label className="block text-xs font-medium mb-1.5" style={{ color: 'var(--text-muted)' }}>Select Member *</label>
-            <select 
-              className="input-field cursor-pointer" 
+            <select
+              className="input-field cursor-pointer"
               value={formData.memberId}
-              onChange={(e) => setFormData({...formData, memberId: e.target.value})}
-              required
-            >
+              onChange={(e) => setFormData({ ...formData, memberId: e.target.value })}
+              required>
+              
               <option value="">Choose a member...</option>
-              {members.map(m => <option key={m.id} value={m.id}>{m.fullName} ({m.studentId})</option>)}
+              {members.map((m) => <option key={m.id} value={m.id}>{m.fullName} ({m.studentId})</option>)}
             </select>
           </div>
 
@@ -201,20 +201,20 @@ export default function BorrowPage() {
           </div>
         </form>
       </Modal>
-    </div>
-  );
+    </div>);
+
 }
 
-function TabButton({ active, onClick, children }: any) {
+function TabButton({ active, onClick, children }) {
   return (
-    <button 
+    <button
       onClick={onClick}
       className={clsx(
         "px-6 py-2 rounded-lg text-xs font-bold transition-all",
         active ? "bg-gold-400 text-ink-950 shadow-lg" : "text-zinc-500 hover:text-white"
-      )}
-    >
+      )}>
+      
       {children}
-    </button>
-  );
+    </button>);
+
 }

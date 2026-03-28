@@ -18,6 +18,6 @@ export default function ReportsPage() {
             <Construction size={20} className="text-accent" />
             <span className="text-xs uppercase font-bold tracking-widest text-zinc-500">Feature under active development</span>
         </div>
-    </div>
-  );
+    </div>);
+
 }

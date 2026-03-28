@@ -10,7 +10,7 @@ export default function LoginPage() {
   const [form, setForm] = useState({ username: '', password: '' });
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     try {
@@ -29,16 +29,16 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex items-center justify-center relative overflow-hidden"
-      style={{ background: 'var(--ink-950)' }}>
+    style={{ background: 'var(--ink-950)' }}>
 
       {/* Background grid */}
       <div className="absolute inset-0 bg-grid-pattern bg-grid opacity-60" />
 
       {/* Glow orbs */}
       <div className="absolute top-1/4 left-1/3 w-96 h-96 rounded-full opacity-10 blur-3xl"
-        style={{ background: 'radial-gradient(circle, #F5C842 0%, transparent 70%)' }} />
+      style={{ background: 'radial-gradient(circle, #F5C842 0%, transparent 70%)' }} />
       <div className="absolute bottom-1/4 right-1/3 w-64 h-64 rounded-full opacity-5 blur-3xl"
-        style={{ background: 'radial-gradient(circle, #5A9E59 0%, transparent 70%)' }} />
+      style={{ background: 'radial-gradient(circle, #5A9E59 0%, transparent 70%)' }} />
 
       {/* Login card */}
       <div className="relative z-10 w-full max-w-md mx-4">
@@ -46,10 +46,10 @@ export default function LoginPage() {
         {/* Logo area */}
         <div className="text-center mb-10 fade-up">
           <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-4"
-            style={{ background: 'linear-gradient(135deg, #F5C842 0%, #C99A00 100%)' }}>
+          style={{ background: 'linear-gradient(135deg, #F5C842 0%, #C99A00 100%)' }}>
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none">
-              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="#0A0A0F" strokeWidth="2" strokeLinecap="round"/>
-              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="#0A0A0F" strokeWidth="2"/>
+              <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="#0A0A0F" strokeWidth="2" strokeLinecap="round" />
+              <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="#0A0A0F" strokeWidth="2" />
             </svg>
           </div>
           <h1 className="text-3xl font-bold mb-1" style={{
@@ -65,11 +65,11 @@ export default function LoginPage() {
 
         {/* Card */}
         <div className="rounded-2xl p-8 fade-up fade-up-delay-1"
-          style={{
-            background: 'var(--ink-800)',
-            border: '1px solid var(--ink-600)',
-            boxShadow: '0 24px 64px rgba(0,0,0,0.6)'
-          }}>
+        style={{
+          background: 'var(--ink-800)',
+          border: '1px solid var(--ink-600)',
+          boxShadow: '0 24px 64px rgba(0,0,0,0.6)'
+        }}>
           <h2 className="text-lg font-semibold mb-6" style={{ color: 'var(--text-primary)' }}>
             Sign in to your account
           </h2>
@@ -84,9 +84,9 @@ export default function LoginPage() {
                 type="text"
                 placeholder="Enter your username"
                 value={form.username}
-                onChange={e => setForm({ ...form, username: e.target.value })}
-                required
-              />
+                onChange={(e) => setForm({ ...form, username: e.target.value })}
+                required />
+              
             </div>
 
             <div>
@@ -98,9 +98,9 @@ export default function LoginPage() {
                 type="password"
                 placeholder="Enter your password"
                 value={form.password}
-                onChange={e => setForm({ ...form, password: e.target.value })}
-                required
-              />
+                onChange={(e) => setForm({ ...form, password: e.target.value })}
+                required />
+              
             </div>
 
             <button
@@ -108,13 +108,13 @@ export default function LoginPage() {
               disabled={loading}
               className="btn-primary w-full mt-6 flex items-center justify-center gap-2"
               style={{ padding: '12px', fontSize: '15px' }}>
-              {loading ? (
-                <>
+              {loading ?
+              <>
                   <div className="w-4 h-4 border-2 rounded-full animate-spin"
-                    style={{ borderColor: 'var(--ink-950)', borderTopColor: 'transparent' }} />
+                style={{ borderColor: 'var(--ink-950)', borderTopColor: 'transparent' }} />
                   Signing in...
-                </>
-              ) : 'Sign In'}
+                </> :
+              'Sign In'}
             </button>
           </form>
         </div>
@@ -123,6 +123,6 @@ export default function LoginPage() {
           © 2025 University Library System · All rights reserved
         </p>
       </div>
-    </div>
-  );
+    </div>);
+
 }
