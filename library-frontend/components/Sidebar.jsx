@@ -2,18 +2,15 @@
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import clsx from 'clsx';
 
 const adminMenus = [
 { group: 'Overview', items: [
   { label: 'Dashboard', href: '/dashboard', icon: '▦' }]
 },
-{ group: 'Library', items: [
-  { label: 'Books', href: '/dashboard/books', icon: '📚' },
-  { label: 'Members', href: '/dashboard/members', icon: '👥' },
-  { label: 'Borrow & Return', href: '/dashboard/borrow', icon: '🔄' },
-  { label: 'Fines', href: '/dashboard/fines', icon: '⚠️' }]
+{ group: 'Users', items: [
+  { label: 'Members', href: '/dashboard/members', icon: '👥' }]
 },
 { group: 'Invoice', items: [
   { label: 'Thesis Invoice', href: '/dashboard/thesis-invoice', icon: '🎓' },
@@ -35,11 +32,8 @@ const staffMenus = [
 { group: 'Overview', items: [
   { label: 'Dashboard', href: '/dashboard', icon: '▦' }]
 },
-{ group: 'Library', items: [
-  { label: 'Books', href: '/dashboard/books', icon: '📚' },
-  { label: 'Members', href: '/dashboard/members', icon: '👥' },
-  { label: 'Borrow & Return', href: '/dashboard/borrow', icon: '🔄' },
-  { label: 'Fines', href: '/dashboard/fines', icon: '⚠️' }]
+{ group: 'Users', items: [
+  { label: 'Members', href: '/dashboard/members', icon: '👥' }]
 },
 { group: 'Invoice', items: [
   { label: 'Thesis Invoice', href: '/dashboard/thesis-invoice', icon: '🎓' },
@@ -47,6 +41,9 @@ const staffMenus = [
 },
 { group: 'Finance', items: [
   { label: 'Income', href: '/dashboard/income', icon: '💵' }]
+},
+{ group: 'Personal', items: [
+  { label: 'Settings', href: '/dashboard/settings', icon: '⚙️' }]
 }];
 
 
@@ -55,10 +52,22 @@ export default function Sidebar() {
   const router = useRouter();
   const [collapsed, setCollapsed] = useState(false);
 
-  const userStr = Cookies.get('user');
-  const user = userStr ? JSON.parse(userStr) : null;
-  const role = user?.role || 'STAFF';
-  const menus = role === 'ADMIN' ? adminMenus : staffMenus;
+  const [user, setUser] = useState(null);
+  const [role, setRole] = useState('STAFF');
+  const [menus, setMenus] = useState(staffMenus);
+
+  useEffect(() => {
+    const userStr = Cookies.get('user');
+    if (userStr) {
+      try {
+        const parsed = JSON.parse(userStr);
+        setUser(parsed);
+        const r = parsed?.role || 'STAFF';
+        setRole(r);
+        setMenus(r === 'ADMIN' ? adminMenus : staffMenus);
+      } catch (e) {}
+    }
+  }, []);
 
   const handleLogout = () => {
     Cookies.remove('token');
@@ -79,18 +88,15 @@ export default function Sidebar() {
       {/* Logo */}
       <div className="flex items-center gap-3 px-4 py-5"
       style={{ borderBottom: '1px solid var(--ink-700)' }}>
-        <div className="flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center"
-        style={{ background: 'linear-gradient(135deg, #F5C842, #C99A00)' }}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" stroke="#0A0A0F" strokeWidth="2.5" strokeLinecap="round" />
-            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" stroke="#0A0A0F" strokeWidth="2.5" />
-          </svg>
+        <div className="flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center p-0.5"
+        style={{ background: 'white' }}>
+          <img src="/image/rua-logo.png" alt="RUA" className="w-full h-full object-contain" />
         </div>
         {!collapsed &&
         <span className="font-bold text-base" style={{
           fontFamily: 'Playfair Display, serif',
           color: 'var(--text-primary)'
-        }}>LibraryOS</span>
+        }}>RUA Finance</span>
         }
         <button
           onClick={() => setCollapsed(!collapsed)}
@@ -119,7 +125,7 @@ export default function Sidebar() {
                 isActive ? 'nav-active' : 'hover:bg-ink-800'
               )}
               style={{
-                color: isActive ? 'var(--gold-400)' : 'var(--text-muted)',
+                color: isActive ? 'var(--primary-400)' : 'var(--text-muted)',
                 background: isActive ? undefined : undefined
               }}
               title={collapsed ? item.label : undefined}>
@@ -145,7 +151,7 @@ export default function Sidebar() {
               <p className="text-sm font-medium truncate" style={{ color: 'var(--text-primary)' }}>
                 {user?.fullName || 'User'}
               </p>
-              <p className="text-xs" style={{ color: 'var(--gold-400)' }}>{role}</p>
+              <p className="text-xs" style={{ color: 'var(--primary-400)' }}>{role}</p>
             </div>
           }
           {!collapsed &&

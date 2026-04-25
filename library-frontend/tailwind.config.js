@@ -10,7 +10,7 @@ const config = {
     extend: {
       colors: {
         background: 'var(--ink-950)',
-        accent: 'var(--gold-400)',
+        accent: 'var(--primary-400)',
         success: 'var(--sage-500)',
         danger: 'var(--rose-500)',
         'ink': {
@@ -20,9 +20,9 @@ const config = {
           900: 'var(--ink-900)',
           950: 'var(--ink-950)'
         },
-        'gold': {
-          400: 'var(--gold-400)',
-          500: 'var(--gold-500)'
+        'primary': {
+          400: 'var(--primary-400)',
+          500: 'var(--primary-500)'
         },
         text: {
           primary: 'var(--text-primary)',
@@ -39,4 +39,4 @@ const config = {
   },
   plugins: []
 };
-export default config;
+module.exports = config;

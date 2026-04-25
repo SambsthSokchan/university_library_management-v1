@@ -18,13 +18,13 @@ public class IncomeController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
     public List<IncomeTransaction> getAllIncome() {
         return incomeService.getAllIncome();
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
     public IncomeTransaction addIncome(@RequestBody IncomeTransaction income) {
         return incomeService.addIncome(income);
     }

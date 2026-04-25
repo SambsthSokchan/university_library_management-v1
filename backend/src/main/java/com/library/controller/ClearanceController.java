@@ -30,7 +30,7 @@ public class ClearanceController {
     }
 
     @PostMapping("/review/{requestId}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
     public ResponseEntity<ClearanceRequest> reviewRequest(
             @PathVariable Long requestId,
             @RequestParam ClearanceRequest.ClearanceStatus status,

@@ -88,7 +88,7 @@ export default function ThesisInvoicePage() {
                 <div className="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center text-zinc-500"><GraduationCap size={20} /></div>
                 <div className="min-w-0">
                   <p className="text-sm font-bold text-white truncate max-w-[200px]">{inv.thesisTitle || 'General Thesis Submission'}</p>
-                  <p className="text-[10px] uppercase font-bold tracking-widest mt-1" style={{ color: 'var(--gold-400)' }}>Academic Fee</p>
+                  <p className="text-[10px] uppercase font-bold tracking-widest mt-1" style={{ color: 'var(--primary-400)' }}>Academic Fee</p>
                 </div>
               </div>
 
@@ -109,7 +109,7 @@ export default function ThesisInvoicePage() {
 
             <div className="flex flex-col items-center gap-1">
                   <span className="text-[10px] uppercase font-bold tracking-widest text-emerald-500">PAID</span>
-                  <button className="text-[10px] underline tracking-widest text-zinc-600 hover:text-white transition-colors">RECEIPT</button>
+                  <button className="text-[10px] underline tracking-widest text-zinc-600 hover:text-text-primary transition-colors">RECEIPT</button>
                 </div>
             }
             </div>

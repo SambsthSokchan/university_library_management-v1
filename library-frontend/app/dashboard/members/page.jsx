@@ -105,7 +105,7 @@ export default function MembersPage() {
               </div>
               <div className="flex gap-2">
                 <button onClick={() => {setEditingMember(member);setFormData(member);setIsModalOpen(true);}}
-              className="p-2 hover:bg-white/5 rounded-lg text-zinc-500 hover:text-white transition-colors"><Edit2 size={16} /></button>
+              className="p-2 hover:bg-white/5 rounded-lg text-zinc-500 hover:text-text-primary transition-colors"><Edit2 size={16} /></button>
                 {userRole === 'ADMIN' &&
               <button onClick={() => handleDelete(member.id)}
               className="p-2 hover:bg-rose-500/10 rounded-lg text-zinc-500 hover:text-rose-400 transition-colors"><Trash2 size={16} /></button>
@@ -115,7 +115,7 @@ export default function MembersPage() {
 
             <div className="mb-4">
               <h3 className="text-lg font-bold" style={{ color: 'var(--text-primary)' }}>{member.fullName}</h3>
-              <p className="text-xs font-mono uppercase tracking-widest mt-0.5" style={{ color: 'var(--gold-400)' }}>
+              <p className="text-xs font-mono uppercase tracking-widest mt-0.5" style={{ color: 'var(--primary-400)' }}>
                 {member.role} • {member.studentId}
               </p>
             </div>

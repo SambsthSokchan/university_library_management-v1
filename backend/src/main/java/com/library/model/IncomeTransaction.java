@@ -38,7 +38,7 @@ public class IncomeTransaction {
     private LocalDateTime createdAt = LocalDateTime.now();
 
     public enum IncomeSource {
-        FINE, THESIS, OTHER
+        THESIS, OTHER
     }
 
     public IncomeTransaction() {}

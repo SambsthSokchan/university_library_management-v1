@@ -98,7 +98,7 @@ export default function PayoutsPage() {
                 <div className="w-10 h-10 bg-white/5 rounded-xl flex items-center justify-center text-zinc-500"><Calendar size={20} /></div>
                 <div>
                   <p className="text-sm font-bold text-white">{p.payoutPeriod || 'March 2024'}</p>
-                  <p className="text-[10px] uppercase font-bold tracking-widest mt-1" style={{ color: 'var(--gold-400)' }}>Payout Period</p>
+                  <p className="text-[10px] uppercase font-bold tracking-widest mt-1" style={{ color: 'var(--primary-400)' }}>Payout Period</p>
                 </div>
               </div>
 

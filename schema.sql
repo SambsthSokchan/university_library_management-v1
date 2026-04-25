@@ -19,22 +19,6 @@ CREATE TABLE users (
 );
 
 -- ============================================================
--- 2. BOOKS
--- ============================================================
-CREATE TABLE books (
-    id                  SERIAL PRIMARY KEY,
-    title               VARCHAR(255) NOT NULL,
-    author              VARCHAR(150),
-    category            VARCHAR(100),
-    isbn                VARCHAR(50) UNIQUE,
-    publisher           VARCHAR(150),
-    published_year      INT,
-    total_quantity      INT DEFAULT 1,
-    available_quantity  INT DEFAULT 1,
-    created_at          TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- ============================================================
 -- 3. MEMBERS (Students & University Staff who borrow books)
 -- ============================================================
 CREATE TABLE members (
@@ -46,35 +30,6 @@ CREATE TABLE members (
     member_type     VARCHAR(20) CHECK (member_type IN ('STUDENT', 'STAFF')),
     department      VARCHAR(100),
     is_active       BOOLEAN DEFAULT TRUE,
-    created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- ============================================================
--- 4. BORROW RECORDS
--- ============================================================
-CREATE TABLE borrow_records (
-    id              SERIAL PRIMARY KEY,
-    book_id         INT NOT NULL REFERENCES books(id),
-    member_id       INT NOT NULL REFERENCES members(id),
-    issued_by       INT REFERENCES users(id),  -- staff who issued the book
-    borrow_date     DATE NOT NULL,
-    due_date        DATE NOT NULL,
-    return_date     DATE,
-    status          VARCHAR(20) DEFAULT 'BORROWED' CHECK (status IN ('BORROWED', 'RETURNED', 'OVERDUE')),
-    created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- ============================================================
--- 5. FINES
--- ============================================================
-CREATE TABLE fines (
-    id              SERIAL PRIMARY KEY,
-    borrow_id       INT NOT NULL REFERENCES borrow_records(id),
-    member_id       INT NOT NULL REFERENCES members(id),
-    amount          DECIMAL(10,2) NOT NULL,
-    paid            BOOLEAN DEFAULT FALSE,
-    paid_at         TIMESTAMP,
-    collected_by    INT REFERENCES users(id),  -- staff who collected fine
     created_at      TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -114,7 +69,7 @@ CREATE TABLE clearance_requests (
 -- ============================================================
 CREATE TABLE income_transactions (
     id                  SERIAL PRIMARY KEY,
-    source              VARCHAR(50) CHECK (source IN ('FINE', 'THESIS', 'OTHER')),
+    source              VARCHAR(50) CHECK (source IN ('THESIS', 'OTHER')),
     reference_id        INT,                   -- fine id or thesis_invoice id
     amount              DECIMAL(10,2) NOT NULL,
     description         TEXT,

@@ -19,19 +19,19 @@ public class StaffPayoutController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
     public List<StaffPayout> getAllPayouts() {
         return payoutService.getAllPayouts();
     }
 
     @PostMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
     public StaffPayout createPayout(@RequestBody StaffPayout payout) {
         return payoutService.createPayout(payout);
     }
 
     @PostMapping("/approve/{payoutId}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
     public ResponseEntity<StaffPayout> approvePayout(@PathVariable Long payoutId) {
         return ResponseEntity.ok(payoutService.approvePayout(payoutId));
     }

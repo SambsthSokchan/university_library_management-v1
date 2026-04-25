@@ -62,7 +62,7 @@ export default function ClearancePage() {
           onClick={() => setFilter(f)}
           className={clsx(
             "px-6 py-2 rounded-lg text-[10px] font-bold uppercase tracking-widest transition-all",
-            filter === f ? "bg-gold-400 text-ink-950 shadow-lg" : "text-zinc-500 hover:text-white"
+            filter === f ? "bg-primary-400 text-ink-950 shadow-lg" : "text-zinc-500 hover:text-text-primary"
           )}>
           
              {f}

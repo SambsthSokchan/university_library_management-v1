@@ -31,8 +31,10 @@ api.interceptors.response.use(
 export default api;
 
 // Auth
-export const login = (data) =>
-api.post('/auth/login', data);
+export const login = (data) => api.post('/auth/login', data);
+export const register = (data) => api.post('/auth/register', data);
+export const sendOtp = (username) => api.post('/auth/forgot-password', { username });
+export const resetPassword = (data) => api.post('/auth/reset-password', data);
 
 // Books
 export const getBooks = () => api.get('/books');

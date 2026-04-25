@@ -88,12 +88,12 @@ export default function StaffPage() {
             
             <div className="flex justify-between items-start mb-4">
               <div className="w-12 h-12 rounded-xl flex items-center justify-center text-xl font-bold"
-            style={{ background: 'rgba(245,200,66,0.1)', color: 'var(--gold-400)' }}>
+            style={{ background: 'rgba(245,200,66,0.1)', color: 'var(--primary-400)' }}>
                 {user.fullName.charAt(0)}
               </div>
               <div className="flex gap-2">
                 <button onClick={() => {setEditingStaff(user);setFormData({ ...user, password: '' });setIsModalOpen(true);}}
-              className="p-2 hover:bg-white/5 rounded-lg text-zinc-500 hover:text-white transition-colors"><Edit2 size={16} /></button>
+              className="p-2 hover:bg-white/5 rounded-lg text-zinc-500 hover:text-text-primary transition-colors"><Edit2 size={16} /></button>
                 <button onClick={() => handleDelete(user.id)}
               className="p-2 hover:bg-rose-500/10 rounded-lg text-zinc-500 hover:text-rose-400 transition-colors"><Trash2 size={16} /></button>
               </div>

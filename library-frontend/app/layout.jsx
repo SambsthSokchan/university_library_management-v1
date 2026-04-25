@@ -9,7 +9,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -17,22 +17,22 @@ export default function RootLayout({ children }) {
         <script dangerouslySetInnerHTML={{ __html: `
           (function() {
             try {
-              var theme = localStorage.getItem('libraryos-theme') || 'dark';
+              var theme = localStorage.getItem('libraryos-theme') || 'light';
               var accent = localStorage.getItem('libraryos-accent') || '#F5C842';
               document.documentElement.setAttribute('data-theme', theme);
-              document.documentElement.style.setProperty('--gold-400', accent);
+              document.documentElement.style.setProperty('--primary-400', accent);
             } catch (e) {}
           })();
         ` }} />
       </head>
-      <body className="font-sans antialiased text-white selection:bg-accent/30 selection:text-white">
+      <body className="font-sans antialiased text-text-primary selection:bg-accent/30 selection:text-white">
         <Toaster
           position="top-right"
           toastOptions={{
             style: {
-              background: '#1A1A24',
-              color: '#E8E8F0',
-              border: '1px solid #363648',
+              background: 'var(--ink-800)',
+              color: 'var(--text-primary)',
+              border: '1px solid var(--ink-700)',
               fontFamily: 'DM Sans, sans-serif',
               fontSize: '14px'
             },

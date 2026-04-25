@@ -57,7 +57,7 @@ public class MemberController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'STAFF')")
     public ResponseEntity<?> deleteMember(@PathVariable Long id) {
         if (!memberRepository.existsById(id)) {
             return ResponseEntity.notFound().build();
